@@ -1,0 +1,1 @@
+The MaterialX Teapot asset was authored by Davide Di Giannantonio Potente and Andrea Weidlich.

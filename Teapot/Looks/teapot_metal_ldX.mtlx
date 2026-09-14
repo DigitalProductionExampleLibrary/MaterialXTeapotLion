@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<materialx version="1.38" xpos="0.0555556" ypos="0.0555556">
+  <surfacematerial name="surfacematerial_teapot_metal" type="material" nodedef="ND_surfacematerial" xpos="4.34579" ypos="-3.52716">
+    <input name="surfaceshader" type="surfaceshader" nodename="surface_teapot_metal" />
+  </surfacematerial>
+  <surface name="surface_teapot_metal" type="surfaceshader" nodedef="ND_surface" xpos="2.8541" ypos="-3.39223">
+    <input name="bsdf" type="BSDF" nodename="mix_grease_teapot_metal" />
+  </surface>
+  <conductor_bsdf name="conductor_teapot_metal" type="BSDF" nodedef="ND_conductor_bsdf" xpos="-2.61343" ypos="1.72959">
+    <input name="ior" type="color3" nodename="IOR_base_teapot_metal" output="ior" />
+    <input name="extinction" type="color3" nodename="IOR_base_teapot_metal" output="extinction" />
+    <input name="normal" type="vector3" nodename="normalize_base_teapot_metal" />
+    <input name="roughness" type="vector2" nodename="roughness_base_teapot_metal" />
+  </conductor_bsdf>
+  <artistic_ior name="IOR_base_teapot_metal" type="multioutput" nodedef="ND_artistic_ior" xpos="-4.36844" ypos="1.76665">
+    <input name="reflectivity" type="color3" nodename="mul_albedo_base_grease_teapot_metal" />
+  </artistic_ior>
+  <image name="tex_roughness_base_teapot_metal" type="float" nodedef="ND_image_float" xpos="-8.58389" ypos="5.20392">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L1Base/Teapot_TeapotMetal_Roughness.1021.png" />
+  </image>
+  <power name="desquare_roughness_base_grease_teapot_metal" type="float" nodedef="ND_power_float" xpos="-6.58472" ypos="5.06778">
+    <input name="in1" type="float" nodename="tex_roughness_base_teapot_metal" />
+    <input name="in2" type="float" value="1.5" />
+  </power>
+  <convert name="f2Vec2_base_teapot_metal" type="vector2" nodedef="ND_convert_float_vector2" xpos="-5.58472" ypos="5.06778">
+    <input name="in" type="float" nodename="desquare_roughness_base_grease_teapot_metal" />
+  </convert>
+  <constant name="constant_roughness_base_teapot_metal" type="vector2" nodedef="ND_constant_vector2" xpos="-6.54422" ypos="3.98881">
+    <input name="value" type="vector2" value="0.01, 0.01" />
+  </constant>
+  <image name="tex_normal_painted_base_teapot_metal" type="vector3" nodedef="ND_image_vector3" xpos="-10.0778" ypos="10.1993">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L1Base/Teapot_TeapotMetal_Normal.1021.png" />
+  </image>
+  <tiledimage name="tex_normal_fine_base_teapot_metal" type="vector3" nodedef="ND_tiledimage_vector3" xpos="-9.99506" ypos="7.93478">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L1Base/Teapot_TeapotMetal_Normal_concrete.png" />
+    <input name="uvtiling" type="vector2" value="6, 6" />
+  </tiledimage>
+  <normalize name="normalize_base_teapot_metal" type="vector3" nodedef="ND_normalize_vector3" xpos="-5.63867" ypos="7.53161">
+    <input name="in" type="vector3" nodename="mix_normalmap_base_teapot_metal" />
+  </normalize>
+  <power name="mask_pow_dirt_teapot_metal1" type="float" nodedef="ND_power_float" xpos="-8.65672" ypos="12.4602">
+    <input name="in1" type="float" nodename="tex_mask_dirt_teapot_metal1" />
+    <input name="in2" type="float" value="0.748" />
+  </power>
+  <image name="tex_mask_dirt_teapot_metal1" type="float" nodedef="ND_image_float" xpos="-10.1423" ypos="12.5779">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L1Base/TeapotMetal_L2Dirt_Mask_Noise.jpg" />
+  </image>
+  <normalmap name="normalmap_painted_base_teapot_metal" type="vector3" nodedef="ND_normalmap" xpos="-8.65839" ypos="10.0706">
+    <input name="in" type="vector3" nodename="tex_normal_painted_base_teapot_metal" />
+  </normalmap>
+  <normalmap name="normalmap_fine_base_teapot_metal" type="vector3" nodedef="ND_normalmap" xpos="-8.65467" ypos="7.79889">
+    <input name="in" type="vector3" nodename="tex_normal_fine_base_teapot_metal" />
+    <input name="scale" type="float" value="0.3" />
+  </normalmap>
+  <mix name="mix_normalmap_base_teapot_metal" type="vector3" nodedef="ND_mix_vector3" xpos="-6.985" ypos="7.66833">
+    <input name="fg" type="vector3" nodename="normalmap_fine_base_teapot_metal" />
+    <input name="bg" type="vector3" nodename="normalmap_painted_base_teapot_metal" />
+    <input name="mix" type="float" nodename="mask_pow_dirt_teapot_metal1" />
+  </mix>
+  <mix name="roughness_base_teapot_metal" type="vector2" nodedef="ND_mix_vector2" xpos="-4.77467" ypos="3.86571">
+    <input name="fg" type="vector2" nodename="constant_roughness_base_teapot_metal" />
+    <input name="bg" type="vector2" nodename="f2Vec2_base_teapot_metal" />
+    <input name="mix" type="float" value="0.7" />
+  </mix>
+  <oren_nayar_diffuse_bsdf name="albedo_dirt_teapot_metal" type="BSDF" nodedef="ND_oren_nayar_diffuse_bsdf" xpos="-4.31384" ypos="-2.40805">
+    <input name="roughness" type="float" value="0.709" />
+    <input name="color" type="color3" nodename="tex_albedo_dirt_teapot_metal" />
+  </oren_nayar_diffuse_bsdf>
+  <mix name="layer_dirt_teapot_metal" type="BSDF" nodedef="ND_mix_bsdf" xpos="-0.269726" ypos="-1.74707">
+    <input name="fg" type="BSDF" nodename="albedo_dirt_teapot_metal" />
+    <input name="bg" type="BSDF" nodename="conductor_teapot_metal" />
+    <input name="mix" type="float" nodename="tex_mask_dirt_teapot_metal" />
+  </mix>
+  <conductor_bsdf name="conductor_grease_teapot_metal" type="BSDF" nodedef="ND_conductor_bsdf" xpos="-0.287733" ypos="-6.48522">
+    <input name="ior" type="color3" nodename="IOR_base_teapot_metal" output="ior" />
+    <input name="extinction" type="color3" nodename="IOR_base_teapot_metal" output="extinction" />
+    <input name="roughness" type="vector2" nodename="f2Vec2_grease_teapot_metal" />
+    <input name="normal" type="vector3" nodename="normalize_base_teapot_metal" />
+  </conductor_bsdf>
+  <image name="tex_albedo_base_teapot_metal" type="color3" nodedef="ND_image_color3" xpos="-8.59494" ypos="1.98452">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L1Base/Teapot_TeapotMetal_Albedo.Blur.1021.png" colorspace="srgb_texture" />
+  </image>
+  <multiply name="mul_albedo_base_grease_teapot_metal" type="color3" nodedef="ND_multiply_color3" xpos="-6.42878" ypos="2.03175">
+    <input name="in1" type="color3" nodename="tex_albedo_base_teapot_metal" />
+    <input name="in2" type="color3" value="1, 1, 0.9" />
+  </multiply>
+  <image name="tex_albedo_dirt_teapot_metal" type="color3" nodedef="ND_image_color3" xpos="-6.2305" ypos="-2.15339">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L2Dirt/Teapot_TeapotMetal_Albedo.1021.png" colorspace="srgb_texture" />
+  </image>
+  <image name="tex_roughness_grease_teapot_metal" type="float" nodedef="ND_image_float" xpos="-6.14344" ypos="-6.92622">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L3GreasyDirt/Teapot_TeapotMetal_Roughness.1021.png" />
+  </image>
+  <power name="desquare_roughness_grease_teapot_metal" type="float" nodedef="ND_power_float" xpos="-4.38784" ypos="-6.98339">
+    <input name="in1" type="float" nodename="tex_roughness_grease_teapot_metal" />
+    <input name="in2" type="float" value="1.5" />
+  </power>
+  <convert name="f2Vec2_grease_teapot_metal" type="vector2" nodedef="ND_convert_float_vector2" xpos="-2.63511" ypos="-7.05789">
+    <input name="in" type="float" nodename="desquare_roughness_grease_teapot_metal" />
+  </convert>
+  <mix name="mix_grease_teapot_metal" type="BSDF" nodedef="ND_mix_bsdf" xpos="1.40865" ypos="-3.24912">
+    <input name="bg" type="BSDF" nodename="layer_dirt_teapot_metal" />
+    <input name="mix" type="float" nodename="tex_mask_grease_teapot_metal" ldx_value="0.5" />
+    <input name="fg" type="BSDF" nodename="conductor_grease_teapot_metal" />
+  </mix>
+  <image name="tex_mask_grease_teapot_metal" type="float" nodedef="ND_image_float" xpos="-6.13983" ypos="-4.61329">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L3GreasyDirt/TeapotMetal_L3GreasyDirt_Mask.1021.png" />
+  </image>
+  <image name="tex_mask_dirt_teapot_metal" type="float" nodedef="ND_image_float" xpos="-1.93893" ypos="4.30659">
+    <input name="file" type="filename" value="../Texture/TeapotMetal_L2Dirt/TeapotMetal_L2Dirt_Mask2.1021.png" />
+  </image>
+</materialx>

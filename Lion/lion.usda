@@ -1,0 +1,45 @@
+#usda 1.0
+(
+    defaultPrim = "Statue"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "Statue" (
+    assetInfo = {
+        asset identifier = @lion.usda@
+        string name = "Statue"
+    }
+    kind = "component"
+    prepend references = @Geometry/lion_statue_lq.usd@
+)
+{
+    def Scope "Looks"
+    {
+        def Material "StatueMaterial" (
+            prepend references = @Looks/lion_ldX.mtlx@</MaterialX/Materials/surfacematerial_lion>
+        )
+        {
+        }
+    }
+
+    over "statue"
+    {
+        over "statue" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Statue/Looks/StatueMaterial>
+        }
+    }
+    over "base"
+    {
+        over "base" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Statue/Looks/StatueMaterial>
+        }
+    }
+}
+

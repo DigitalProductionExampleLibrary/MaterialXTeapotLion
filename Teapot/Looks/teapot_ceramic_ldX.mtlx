@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<materialx version="1.38" xpos="0.0555556" ypos="0.0555556">
+  <surfacematerial name="surfacematerial_teapot_ceramic" type="material" nodedef="ND_surfacematerial" xpos="8.29328" ypos="-10.7592">
+    <input name="surfaceshader" type="surfaceshader" nodename="surface_teapot_ceramic" />
+  </surfacematerial>
+  <oren_nayar_diffuse_bsdf name="diffuse_teapot_ceramic" type="BSDF" nodedef="ND_oren_nayar_diffuse_bsdf" xpos="1.42728" ypos="-2.25804">
+    <input name="color" type="color3" nodename="convert1" ldx_value="0.2486, 0.0678, 0.0678" />
+    <input name="normal" type="vector3" nodename="normalmap_base_teapot_ceramic" />
+  </oren_nayar_diffuse_bsdf>
+  <surface name="surface_teapot_ceramic" type="surfaceshader" nodedef="ND_surface" xpos="6.94794" ypos="-10.6248">
+    <input name="bsdf" type="BSDF" nodename="layer_dust_teapot_ceramic" />
+  </surface>
+  <viewdirection name="viewdirection_ws" type="vector3" nodedef="ND_viewdirection_vector3" xpos="-13.197" ypos="-1.94281" />
+  <dotproduct name="dot" type="float" nodedef="ND_dotproduct_vector3" xpos="-11.726" ypos="-2.07943">
+    <input name="in1" type="vector3" nodename="viewdirection_ws" />
+    <input name="in2" type="vector3" nodename="normal_ws" />
+  </dotproduct>
+  <normal name="normal_ws" type="vector3" nodedef="ND_normal_vector3" xpos="-13.2482" ypos="-0.807978">
+    <input name="space" type="string" value="world" />
+  </normal>
+  <multiply name="thicknessscale_teapot_ceramic" type="vector3" nodedef="ND_multiply_vector3" xpos="-12.2232" ypos="0.600722">
+    <input name="in2" type="vector3" value="-0.6, -0.6, -0.6" />
+    <input name="in1" type="vector3" nodename="transm2thickness_teapot_ceramic" />
+  </multiply>
+  <normalmap name="normalmap_base_teapot_ceramic" type="vector3" nodedef="ND_normalmap" xpos="-1.29525" ypos="2.74678">
+    <input name="in" type="vector3" nodename="tex_normal_base_teapot_ceramic" />
+  </normalmap>
+  <image name="tex_normal_base_teapot_ceramic" type="vector3" nodedef="ND_image_vector3" xpos="-2.71102" ypos="2.86851">
+    <input name="file" type="filename" value="../Texture/TeapotCeramic_L1Base/Teapot_TeapotCeramic_Normal.<UDIM>.png" />
+  </image>
+  <image name="tex_albedo_teapot_ceramic" type="vector3" nodedef="ND_image_vector3" xpos="-17.5713" ypos="0.955261">
+    <input name="file" type="filename" value="../Texture/TeapotCeramic_L1Base/Teapot_TeapotCeramic_Albedo.<UDIM>.png" />
+  </image>
+  <divide name="_1DivT_teapot_ceramic" type="vector3" nodedef="ND_divide_vector3" xpos="-14.0696" ypos="2.71956">
+    <input name="in1" type="vector3" value="1, 1, 1" />
+    <input name="in2" type="vector3" nodename="transmittance_teapot_ceramic" />
+  </divide>
+  <ln name="absorption_teapot_ceramic" type="vector3" nodedef="ND_ln_vector3" xpos="-12.6373" ypos="2.58194">
+    <input name="in" type="vector3" nodename="_1DivT_teapot_ceramic" />
+  </ln>
+  <constant name="transmittance_teapot_ceramic" type="vector3" nodedef="ND_constant_vector3" xpos="-15.4697" ypos="3.39136">
+    <input name="value" type="vector3" value="0.0156, 0.068, 0.15862" />
+  </constant>
+  <exp name="absorption2transmittance_teapot_ceramic" type="vector3" nodedef="ND_exp_vector3" xpos="-2.74108" ypos="-0.763978">
+    <input name="in" type="vector3" nodename="beer_teapot_ceramic" />
+  </exp>
+  <multiply name="aMulthickness_teapot_ceramic" type="vector3" nodedef="ND_multiply_vector3" xpos="-9.70339" ypos="0.89765">
+    <input name="in1" type="vector3" nodename="thicknessscale_teapot_ceramic" />
+    <input name="in2" type="vector3" nodename="absorption_teapot_ceramic" />
+  </multiply>
+  <layer name="layer_glazing_teapot_ceramic" type="BSDF" nodedef="ND_layer_bsdf" xpos="2.77793" ypos="-3.95393">
+    <input name="base" type="BSDF" nodename="diffuse_teapot_ceramic" />
+    <input name="top" type="BSDF" nodename="mix_glazing_teapot_ceramic" />
+  </layer>
+  <dielectric_bsdf name="dielectric1_glazing_teapot_ceramic" type="BSDF" nodedef="ND_dielectric_bsdf" xpos="-1.15655" ypos="-6.15389">
+    <input name="roughness" type="vector2" value="0.002, 0.002" />
+    <input name="normal" type="vector3" nodename="normalmap_base_teapot_ceramic1" />
+    <input name="ior" type="float" nodename="constant_IOR_teapot_ceramic" />
+  </dielectric_bsdf>
+  <constant name="constant_IOR_teapot_ceramic" type="float" nodedef="ND_constant_float" xpos="-11.9104" ypos="-4.35114">
+    <input name="value" type="float" value="1.48" />
+  </constant>
+  <dielectric_bsdf name="dielectric2_glazing_teapot_ceramic" type="BSDF" nodedef="ND_dielectric_bsdf" xpos="-1.07998" ypos="-8.56889">
+    <input name="ior" type="float" nodename="constant_IOR_teapot_ceramic" />
+    <input name="normal" type="vector3" nodename="normalmap_base_teapot_ceramic1" />
+    <input name="roughness" type="vector2" nodename="roughness_f2v2_teapot_ceramic" />
+  </dielectric_bsdf>
+  <mix name="mix_glazing_teapot_ceramic" type="BSDF" nodedef="ND_mix_bsdf" xpos="0.920639" ypos="-7.18972">
+    <input name="bg" type="BSDF" nodename="dielectric1_glazing_teapot_ceramic" />
+    <input name="fg" type="BSDF" nodename="dielectric2_glazing_teapot_ceramic" />
+    <input name="mix" type="float" nodename="clamp_mask_stain_teapot_ceramic" ldx_value="0.5" />
+  </mix>
+  <oren_nayar_diffuse_bsdf name="diffuse_stain_teapot_ceramic" type="BSDF" nodedef="ND_oren_nayar_diffuse_bsdf" xpos="-5.8135" ypos="-14.315">
+    <input name="roughness" type="float" value="0.268" />
+    <input name="weight" type="float" value="1" />
+    <input name="color" type="color3" nodename="tex_albedo_stain_teapot_ceramic" />
+  </oren_nayar_diffuse_bsdf>
+  <multiply name="mul_mask_stain_teapot_ceramic" type="float" nodedef="ND_multiply_float" xpos="-6.09806" ypos="-10.3812">
+    <input name="in2" type="float" value="0.594" />
+    <input name="in1" type="float" nodename="clamp_mask_stain_teapot_ceramic" />
+  </multiply>
+  <layer name="layer_stain_teapot_ceramic" type="BSDF" nodedef="ND_layer_bsdf" xpos="4.01649" ypos="-7.70939">
+    <input name="top" type="BSDF" nodename="mix_stain_teapot_ceramic" />
+    <input name="base" type="BSDF" nodename="layer_glazing_teapot_ceramic" />
+  </layer>
+  <dielectric_bsdf name="transmissiondummy_stain_teapot_ceramic" type="BSDF" nodedef="ND_dielectric_bsdf" xpos="-5.92239" ypos="-12.3818">
+    <input name="ior" type="float" value="1" />
+    <input name="weight" type="float" value="0" />
+  </dielectric_bsdf>
+  <mix name="mix_stain_teapot_ceramic" type="BSDF" nodedef="ND_mix_bsdf" xpos="-3.90437" ypos="-12.5134">
+    <input name="fg" type="BSDF" nodename="diffuse_stain_teapot_ceramic" />
+    <input name="bg" type="BSDF" nodename="transmissiondummy_stain_teapot_ceramic" />
+    <input name="mix" type="float" nodename="mul_mask_stain_teapot_ceramic" />
+  </mix>
+  <dielectric_bsdf name="transmissiondummy_dust_teapot_ceramic" type="BSDF" nodedef="ND_dielectric_bsdf" xpos="-3.37854" ypos="-17.0372">
+    <input name="ior" type="float" value="1" />
+    <input name="weight" type="float" value="0" />
+  </dielectric_bsdf>
+  <oren_nayar_diffuse_bsdf name="diffuse_dust_teapot_ceramic" type="BSDF" nodedef="ND_oren_nayar_diffuse_bsdf" xpos="-3.34429" ypos="-18.4441">
+    <input name="roughness" type="float" value="0.544" />
+    <input name="weight" type="float" value="1" />
+    <input name="color" type="color3" value="1, 1, 1" />
+  </oren_nayar_diffuse_bsdf>
+  <mix name="mix_dust_teapot_ceramic" type="BSDF" nodedef="ND_mix_bsdf" xpos="-1.30236" ypos="-17.1539">
+    <input name="bg" type="BSDF" nodename="transmissiondummy_dust_teapot_ceramic" />
+    <input name="fg" type="BSDF" nodename="diffuse_dust_teapot_ceramic" />
+    <input name="mix" type="float" nodename="tex_albedo_dust_teapot_ceramic" />
+  </mix>
+  <layer name="layer_dust_teapot_ceramic" type="BSDF" nodedef="ND_layer_bsdf" xpos="5.609" ypos="-10.4913">
+    <input name="top" type="BSDF" nodename="mix_dust_teapot_ceramic" />
+    <input name="base" type="BSDF" nodename="layer_stain_teapot_ceramic" />
+  </layer>
+  <normalmap name="normalmap_base_teapot_ceramic1" type="vector3" nodedef="ND_normalmap" xpos="-2.72137" ypos="-4.89107">
+    <input name="in" type="vector3" nodename="tex_normal_base_teapot_ceramic1" />
+  </normalmap>
+  <image name="tex_normal_base_teapot_ceramic1" type="vector3" nodedef="ND_image_vector3" xpos="-4.13714" ypos="-4.76933">
+    <input name="file" type="filename" value="../Texture/TeapotCeramic_L2Clearcoat/Teapot_TeapotCeramic_Normal.<UDIM>.png" />
+  </image>
+  <ln name="transm2thickness_teapot_ceramic" type="vector3" nodedef="ND_ln_vector3" xpos="-13.6994" ypos="0.732339">
+    <input name="in" type="vector3" nodename="albedo_desat_f2v3_teapot_ceramic" />
+  </ln>
+  <dotproduct name="albedo_desat_teapot_ceramic" type="float" nodedef="ND_dotproduct_vector3" xpos="-16.2318" ypos="0.140674">
+    <input name="in2" type="vector3" nodename="tex_albedo_teapot_ceramic" />
+    <input name="in1" type="vector3" nodename="luminance" />
+  </dotproduct>
+  <combine3 name="combine1" type="vector3" nodedef="ND_combine3_vector3" Autodesk-hidden="true">
+    <input name="in1" type="float" value="0" />
+    <input name="in2" type="float" value="0" />
+    <input name="in3" type="float" value="0" />
+  </combine3>
+  <constant name="luminance" type="vector3" nodedef="ND_constant_vector3" xpos="-17.5116" ypos="-0.209029">
+    <input name="value" type="vector3" value="0.272229, 0.674082, 0.053689" />
+  </constant>
+  <multiply name="mulMin1_teapot_ceramic" type="vector3" nodedef="ND_multiply_vector3" xpos="-7.91211" ypos="0.789061">
+    <input name="in1" type="vector3" nodename="aMulthickness_teapot_ceramic" />
+    <input name="in2" type="vector3" value="-1, -1, -1" />
+  </multiply>
+  <convert name="pathlengthscale_f2v3_teapot_ceramic" type="vector3" nodedef="ND_convert_float_vector3" xpos="-5.3885" ypos="-2.12921">
+    <input name="in" type="float" nodename="pathlengthscale_teapot_ceramic" />
+  </convert>
+  <multiply name="mulAbsorptionBase_teapot_ceramic" type="vector3" nodedef="ND_multiply_vector3" xpos="-1.3265" ypos="-0.102844">
+    <input name="in1" type="vector3" nodename="absorption2transmittance_teapot_ceramic" />
+    <input name="in2" type="vector3" nodename="constant_base_teapot_ceramic" />
+  </multiply>
+  <constant name="constant_base_teapot_ceramic" type="vector3" nodedef="ND_constant_vector3" xpos="-2.75252" ypos="1.25287">
+    <input name="value" type="vector3" value="1, 1, 1" />
+  </constant>
+  <divide name="niDivNt_teapot_ceramic" type="float" nodedef="ND_divide_float" xpos="-10.2645" ypos="-3.7684">
+    <input name="in1" type="float" value="1" />
+    <input name="in2" type="float" nodename="constant_IOR_teapot_ceramic" />
+  </divide>
+  <convert name="roughness_f2v2_teapot_ceramic" type="vector2" nodedef="ND_convert_float_vector2" xpos="-5.12411" ypos="-8.35283">
+    <input name="in" type="float" nodename="clamp_mask_stain_teapot_ceramic" />
+  </convert>
+  <image name="tex_mask_stain_text_albedo_stain_teapot_ceramic" type="float" nodedef="ND_image_float" xpos="-11.5695" ypos="-6.86894">
+    <input name="file" type="filename" value="../Texture/TeapotCeramic_L3Stains/TeapotCeramic_L3Stains_Mask.<UDIM>.png" />
+  </image>
+  <contrast name="contrast_mask_stain_teapot_ceramic" type="float" nodedef="ND_contrast_float" xpos="-9.90867" ypos="-7.00578">
+    <input name="in" type="float" nodename="tex_mask_stain_text_albedo_stain_teapot_ceramic" />
+    <input name="pivot" type="float" value="0.528" />
+  </contrast>
+  <clamp name="clamp_mask_stain_teapot_ceramic" type="float" nodedef="ND_clamp_float" xpos="-8.38839" ypos="-7.14756">
+    <input name="in" type="float" nodename="contrast_mask_stain_teapot_ceramic" />
+  </clamp>
+  <convert name="convert1" type="color3" nodedef="ND_convert_vector3_color3" xpos="0.0111422" ypos="-1.29876">
+    <input name="in" type="vector3" nodename="mulAbsorptionBase_teapot_ceramic" />
+  </convert>
+  <combine3 name="combine2" type="vector3" nodedef="ND_combine3_vector3" Autodesk-hidden="true">
+    <input name="in1" type="float" value="0" />
+    <input name="in2" type="float" value="0" />
+    <input name="in3" type="float" value="0" />
+  </combine3>
+  <image name="tex_albedo_dust_teapot_ceramic" type="float" nodedef="ND_image_float" xpos="-3.40892" ypos="-15.1554">
+    <input name="file" type="filename" value="../Texture/TeapotCeramic_L4Dust/TeapotCeramic_L4Dust_Mask.<UDIM>.png" />
+  </image>
+  <asin name="asin_critical_angle_teapot_ceramic" type="float" nodedef="ND_asin_float" xpos="-8.79033" ypos="-3.89783">
+    <input name="in" type="float" nodename="niDivNt_teapot_ceramic" />
+  </asin>
+  <convert name="albedo_desat_f2v3_teapot_ceramic" type="vector3" nodedef="ND_convert_float_vector3" xpos="-14.9677" ypos="0.280935">
+    <input name="in" type="float" nodename="albedo_desat_teapot_ceramic" />
+  </convert>
+  <absval name="abs" type="float" nodedef="ND_absval_float" xpos="-9.97994" ypos="-2.21677">
+    <input name="in" type="float" nodename="dot" />
+  </absval>
+  <divide name="pathlength_teapot_ceramic" type="float" nodedef="ND_divide_float" xpos="-8.31372" ypos="-2.33958">
+    <input name="in2" type="float" nodename="abs" />
+    <input name="in1" type="float" value="1" />
+  </divide>
+  <remap name="pathlengthscale_teapot_ceramic" type="float" nodedef="ND_remap_float" xpos="-6.76228" ypos="-1.99124">
+    <input name="in" type="float" nodename="pathlength_teapot_ceramic" />
+    <input name="outlow" type="float" nodename="asin_critical_angle_teapot_ceramic" />
+  </remap>
+  <multiply name="beer_teapot_ceramic" type="vector3" nodedef="ND_multiply_vector3" xpos="-4.10542" ypos="-0.392084">
+    <input name="in2" type="vector3" nodename="mulMin1_teapot_ceramic" />
+    <input name="in1" type="vector3" nodename="pathlengthscale_f2v3_teapot_ceramic" />
+  </multiply>
+  <image name="tex_albedo_stain_teapot_ceramic" type="color3" nodedef="ND_image_color3" xpos="-7.604" ypos="-14.0433">
+    <input name="file" type="filename" value="../Texture/TeapotCeramic_L3Stains/Teapot_TeapotCeramic_Albedo.<UDIM>.png" colorspace="srgb_texture" />
+  </image>
+</materialx>

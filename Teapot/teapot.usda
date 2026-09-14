@@ -1,0 +1,61 @@
+#usda 1.0
+(
+    defaultPrim = "Teapot"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "Teapot" (
+    assetInfo = {
+        asset identifier = @teapot.usda@
+        string name = "Teapot"
+    }
+    kind = "component"
+    prepend references = @Geometry/teapot.usda@
+)
+{
+    def Scope "Looks"
+    {
+        def Material "TeapotCeramic" (
+            prepend references = @Looks/teapot_ceramic_ldX.mtlx@</MaterialX/Materials/surfacematerial_teapot_ceramic>
+        )
+        {
+        }
+
+        def Material "TeapotMetal" (
+            prepend references = @Looks/teapot_metal_ldX.mtlx@</MaterialX/Materials/surfacematerial_teapot_metal>
+        )
+        {
+        }
+    }
+
+    over "Teapot_Body"
+    {
+        over "Teapot_Body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Teapot/Looks/TeapotCeramic>
+        }
+    }
+
+    over "Teapot_Lid"
+    {
+        over "Teapot_Lid" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Teapot/Looks/TeapotCeramic>
+        }
+    }
+
+    over "Teapot_Handle"
+    {
+        over "Teapot_Handle" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Teapot/Looks/TeapotMetal>
+        }
+    }
+}

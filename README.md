@@ -1,4 +1,4 @@
-# MaterialX Teapot and MaterialX Lion Assets
+# MaterialX Teapot and Lion Assets
 
 ![MaterialX Teapot and MaterialX Lion](overview.png)
 
